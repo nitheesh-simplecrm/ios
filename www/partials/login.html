@@ -1,0 +1,81 @@
+<br>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="text-center"><b>Login</b></h1>
+            <div ng-show="networkOfflineStatus" class="text-center">
+                <br>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 class="text-info">Tap below to try again</h4>
+                        <a ng-click="login(user)" class="fa fa-refresh fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body" ng-hide="loginData.loggedSessionID">
+            <form novalidate role="form" class="form" name="form">
+                <span class="label label-info left" ng-show="form.username.$dirty && form.username.$error.required">Required.</span>
+                <span class="label label-warning left" ng-show="form.username.$dirty && form.username.$invalid">Invalid username.</span>
+                <span class="label label-warning left" ng-show="form.username.$error.minlength">Too Short.</span>
+                <span class="label label-warning left" ng-show="form.username.$error.maxlength">Too Long.</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user fa-fw fa-lg"></i>
+                        </span>
+                        <input type="text" name="username" class="cstm-bg-sec form-control input-lg" placeholder="Username" ng-model="user.username" ng-minlength="3" ng-maxlength="20" ng-pattern="/^[a-zA-Z0-9.]+$/" required >
+                    </div>
+                </div>
+
+                <span class="label label-info left" ng-show="form.password.$dirty && form.password.$error.required">Required.</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon input-group-lg">
+                            <i class="fa fa-key fa-fw fa-lg"></i>
+                        </span>
+                        <input type="password" name="password" class="cstm-bg-sec form-control input-lg" placeholder="Password" ng-model="user.password" required >
+                    </div>
+                </div>
+
+                <span class="label label-info left" ng-show="form.url.$dirty && form.url.$error.required">Required.</span>
+                <span class="label label-warning left" ng-show="form.url.$dirty && form.url.$invalid">Invalid URL.</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-globe fa-fw fa-lg"></i>
+                        </span>
+                        <input ng-readonly="true" type="text" name="url" class="cstm-bg-sec form-control input-lg" placeholder="CRM URL" ng-model="user.url" required >
+                    </div>
+                </div>
+
+                <div class="alert alert-danger" ng-show="loginData.error">{{loginData.error}}</div>
+
+                <!--<p class="text-center">-->
+                <button class="btn btn-lg scrm_blue_b scrm_white col-xs-5 pull-left" id="loginUser" data-loading-text="Loading..." ng-disabled="form.$invalid" ng-click="login(user)">Login</button> 
+                <button class="btn btn-lg scrm_red_b scrm_white col-xs-5 pull-right" id="noLoginUser" ng-click="noLogin()" >Reset</button>
+                <!--</p>-->
+                <br><br><br>
+
+            </form>
+        </div>
+
+        <div class="container-fluid" ng-show="loginData.loggedSessionID">
+            <br>
+            <div class="alert alert-info col-md-4 col-md-offset-4 text-center">
+                <h4>It appears you are already logged in.</h4>
+                <br>
+                <h4>To go to the home dashboard click on the button below.</h4>
+                <br>
+                <button ui-sref="home.dashboard" class="btn btn-lg btn-success"><i class="fa fa-home fa-fw fa-lg"></i> Home</button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="left">
+                <h5>&copy Simpleworks Business Solutions Pte Ltd.</h5>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h2 class="modal-title text-center">{{reminder.type}} Reminder</h2>
+</div>
+<div class="modal-body text-center">
+    <h4>
+        <small>Name: </small>
+        {{reminder.name|| 'No Info'}}
+    </h4>
+    <h4>
+        <small>Status: </small>
+        {{reminder.status|| 'No Info'}}
+    </h4>
+    <h4>
+        <small>Start Date:</small>
+        {{reminder.date_start|| 'No Info'}}
+    </h4>
+    <h4>
+        <small>Start Time: </small>
+        {{reminder.date_start_time|| 'No Info'}}
+    </h4>
+</div>
+<div class="modal-footer">
+    <button call-detail="{{reminder.id}}" ng-click="cancel()" class="btn btn-info pull-left"><b>Go to record</b><i class="fa fa-angle-right fa-fw fa-lg right"></i></button>
+    <button ng-click="cancel()" data-dismiss="modal" class="btn btn-success pull-right"><b>No, Go Back</b></button>
+</div>

@@ -1,0 +1,199 @@
+<!--LEFT-->
+<!--CONTENT-->
+<div ng-controller="HomeController">
+    <!--DRAWER-->
+    <div snap-drawer>
+        <!--LEFT NAVIGATION-->
+        <nav id="header" class="main-navigation clearfix text-center">
+            <ul>
+                <li class="cstm-nav-no-buttons">
+                    <h4 class="text-center text-uppercase">
+                        Welcome, <span class="text-info"><i class="fa fa-user fa-fw"></i>{{loginData.loggedUserName}} </span>
+                    </h4>
+                </li>
+            </ul>
+        </nav>
+        <!--LEFT NAVIGATION-->
+        <!--WRAPPER-->
+        <div id="wrapper" class="list-group">
+            <!--SCROLLER-->
+            <div id="scroller-no-gutter-top">
+                <!--HOME-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.dashboard" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('dashboard') > -1, 'cstm-bg-pri' : activeState.indexOf('dashboard') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-home fa-fw fa-lg left" ></i> 
+                             <b>Home</b>
+                       </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState.indexOf('dashboard') > -1" ng-class="{'list-group-item-info' : activeState.indexOf('dashboard') > -1, 'cstm-bg-pri' : activeState.indexOf('dashboard') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--LEADS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.leads.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('leads') > -1, 'cstm-bg-pri' : activeState.indexOf('leads') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-bullseye fa-fw fa-lg left"></i>
+                             <b>Leads</b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.leads.list'" ng-class="{'list-group-item-info' : activeState.indexOf('leads') > -1, 'cstm-bg-pri' : activeState.indexOf('leads') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.leads.create({type: 'edit'})" ng-show="activeState === 'home.leads.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('leads') > -1, 'cstm-bg-pri' : activeState.indexOf('leads') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--ACCOUNTS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.accounts.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('accounts') > -1, 'cstm-bg-pri' : activeState.indexOf('accounts') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-briefcase fa-fw fa-lg left"></i>
+                             <b>Accounts</b>
+                        </h4>
+                       
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.accounts.list'" ng-class="{'list-group-item-info' : activeState.indexOf('accounts') > -1, 'cstm-bg-pri' : activeState.indexOf('accounts') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.accounts.create({type: 'edit'})" ng-show="activeState === 'home.accounts.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('accounts') > -1, 'cstm-bg-pri' : activeState.indexOf('accounts') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--CONTACTS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.contacts.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('contacts') > -1, 'cstm-bg-pri' : activeState.indexOf('contacts') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-user fa-fw fa-lg left"></i> 
+                             <b>Contacts</b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.contacts.list'" ng-class="{'list-group-item-info' : activeState.indexOf('contacts') > -1, 'cstm-bg-pri' : activeState.indexOf('contacts') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.contacts.create({type: 'edit'})" ng-show="activeState === 'home.contacts.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('contacts') > -1, 'cstm-bg-pri' : activeState.indexOf('contacts') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--OPPORTUNITIES-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.opportunities.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('opportunities') > -1, 'cstm-bg-pri' : activeState.indexOf('opportunities') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-dollar fa-fw fa-lg left"></i>
+                             <b>Opportunities</b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.opportunities.list'" ng-class="{'list-group-item-info' : activeState.indexOf('opportunities') > -1, 'cstm-bg-pri' : activeState.indexOf('opportunities') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.opportunities.create({type: 'edit'})" ng-show="activeState === 'home.opportunities.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('opportunities') > -1, 'cstm-bg-pri' : activeState.indexOf('opportunities') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--CALLS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.calls.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('calls') > -1, 'cstm-bg-pri' : activeState.indexOf('calls') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-phone fa-fw fa-lg left"></i>
+                             <b>Calls</b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.calls.list'" ng-class="{'list-group-item-info' : activeState.indexOf('calls') > -1, 'cstm-bg-pri' : activeState.indexOf('calls') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.calls.create({type: 'edit'})" ng-show="activeState === 'home.calls.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('calls') > -1, 'cstm-bg-pri' : activeState.indexOf('calls') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--MEETINGS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.meetings.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('meetings') > -1, 'cstm-bg-pri' : activeState.indexOf('meetings') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-calendar fa-fw fa-lg left"></i>
+                             <b>Meetings </b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.meetings.list'" ng-class="{'list-group-item-info' : activeState.indexOf('meetings') > -1, 'cstm-bg-pri' : activeState.indexOf('meetings') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.meetings.create({type: 'edit'})" ng-show="activeState === 'home.meetings.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('meetings') > -1, 'cstm-bg-pri' : activeState.indexOf('meetings') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+                <!--TASKS-->
+                <div class="row container-fluid">
+                    <a class="list-group-item lead" ui-sref="home.tasks.list" snap-toggle="left" ng-class="{'list-group-item-success col-xs-9' : activeState.indexOf('tasks') > -1, 'cstm-bg-pri' : activeState.indexOf('tasks') === -1}">
+                        <h4 class="scrm_blue">
+                            <i class="fa fa-tasks fa-fw fa-lg left"></i>
+                            <b>Tasks</b>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" refresh ng-show="activeState === 'home.tasks.list'" ng-class="{'list-group-item-info' : activeState.indexOf('tasks') > -1, 'cstm-bg-pri' : activeState.indexOf('tasks') === -1}">
+                        <h4>
+                            <i class="fa fa-refresh fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                    <a class="list-group-item lead col-xs-3" ui-sref="home.tasks.create({type: 'edit'})" ng-show="activeState === 'home.tasks.detail'" ng-class="{'list-group-item-info' : activeState.indexOf('tasks') > -1, 'cstm-bg-pri' : activeState.indexOf('tasks') === -1}">
+                        <h4>
+                            <i class="fa fa-pencil-square fa-fw fa-lg"></i>
+                        </h4>
+                    </a>
+                </div>
+
+
+
+      <!--LOG OUT---------------------------------------------------------------------------------------->
+
+
+                <div class="row container-fluid">
+
+
+<!--                    <a class="list-group-item lead" ui-sref="" snap-toggle="left" ng-class="">-->
+                    <a class="list-group-item lead" snap-toggle="left" id="signout"  data-toggle="modal" data-target="#signoutModal">    
+                        <h4 class="scrm_black">
+                            <i class="fa fa-sign-out fa-fw fa-lg left scrm_red"></i>
+                            <b>Sign Out</b>
+                        </h4>
+                    </a>
+
+                </div>
+
+
+
+
+            </div>
+            <!--SCROLLER-->
+        </div>
+        <!--WRAPPER-->
+    </div>
+    <!--DRAWER-->
+</div>
+<!--CONTENT-->
+<div ng-include="'partials/signOut.html'"></div>

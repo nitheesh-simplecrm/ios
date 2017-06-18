@@ -1,0 +1,267 @@
+<!--TASKS-->
+<!--DRAWERS-->
+<div snap-drawers snap-options="opts">
+    <div ng-include="'partials/left-drawer.html'"></div>
+    <!--RIGHT-->
+    <div snap-drawer="right">
+        <!--RIGHT NAVIGATION-->
+        <nav id="header" class="main-navigation clearfix text-center">
+            <ul class='text-center'>
+                <li>
+                    <h4 ng-show="detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                        <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                        Quick Menu
+                    </h4>
+                    <h4 ng-show="!detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                        <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                        <i class="fa fa-spinner fa-spin fa-fw fa-lg"></i>
+                        Loading... 
+                    </h4>
+                </li>
+            </ul>
+        </nav>
+        <!--RIGHT NAVIGATION-->
+        <!--RIGHT WRAPPER-->
+        <div id="wrapper">
+            <!--RIGHT SCROLLER-->
+            <div id="scroller-no-gutter-top">
+                <!--RIGHT OFFLINE ALERT-->
+                <div ng-show="networkOfflineStatus" class="modal-dialog text-center">
+                    <a class="list-group-item lead">
+                        <i class="text-warning fa fa-exclamation-circle fa-spin fa-fw fa-3x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost.</h4>
+                    </a>
+                </div>
+                <div class="list-group" ng-show="detailStatus && !networkOfflineStatus">
+                    <div class="row container-fluid">
+                        <a class="list-group-item cstm-bg-pri lead">
+                            <h4 class="text-warning">No Quick Menu Options.</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--RIGHT SCROLLER-->
+        </div>
+        <!--RIGHT WRAPPER-->
+    </div>
+    <!--RIGHT-->
+</div>
+<!--DRAWERS-->
+<!--CONTENT-->
+<div snap-content snap-options="opts">
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li snap-toggle="left"><a class="nav-pill-1"><i class="fa fa-bars fa-lg"></i></a></li>
+        </ul>
+        <ul>
+            <li>
+                <h4 ng-show="detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                    Task
+                </h4>
+                <h4 ng-show="!detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                    <i class="fa fa-spinner fa-spin fa-fw fa-lg"></i>
+                    Loading... 
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li snap-toggle="right"><a class="nav-pill-1"><i class="fa fa-plus fa-lg"></i></a></li>
+        </ul>
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class="container-fluid text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 class="text-info">Tap below to try again</h4>
+                        <a refresh class="fa fa-refresh fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <!--DETAIL VIEW-->
+            <div ng-show="detailStatus && !networkOfflineStatus">
+                <!--MINIMISED-->
+                <div class="list-group" ng-show="minimiseDetails">
+                    <div class="list-group-item cstm-bg-sec">
+                        <h4 class="text-capitalize">
+                            Task Details
+                            <i ng-click="minimiseDetails = !minimiseDetails" class="fa fa-expand fa-fw fa-lg right"></i>
+                        </h4>    
+                    </div>
+                </div>
+                <!--MINIMISED-->
+                <!--DETAIL-->
+                <div id="detailView" ng-show="!minimiseDetails">
+                    <!--SUBJECT-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec">
+                                <span editable-text="taskDetail.name.value" onbeforesave="updateTaskInline($data)">
+                                    {{taskDetail.name.value|| 'No Info'}}
+                                    <i ng-click="getFieldName('name')" class="fa fa-edit fa-fw right"></i>
+                                </span>    
+                        </div>
+                    </div>
+                    <!--MORE INFORMATION-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="moreInfoTable = !moreInfoTable">
+                                More Information
+                                <i class="fa fa-fw fa-lg right" ng-class="{ 'fa-chevron-down' : moreInfoTable === true, 'fa-chevron-right' : moreInfoTable === false}"></i>
+                        </div>
+                        <table ng-show="moreInfoTable" class="table table-bordered cstm-bg-sec">
+                            <!--CONTACT-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Contact</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a contact-detail="{{taskDetail.contact_id.value}}">
+                                            {{taskDetail.contact_name.value}}
+                                        </a>
+                                </td>
+                            </tr>
+                            <!--RELATED TO-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b class="text-capitalize">{{ taskParentType || 'No Info'}}</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a ng-click="parentDetail(taskDetail.parent_id.value)">
+                                            {{taskDetail.parent_name.value|| 'No Info'}}
+                                        </a>
+                                </td>
+                            </tr>
+                            <!--STATUS-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Status</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-select="taskDetail.status.value" e-ng-options="status.value as status.name for status in statuses" onbeforesave="updateTaskInline($data)">
+                                            {{taskDetail.status.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('status')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--ASSIGNED TO-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Assigned To</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        {{taskDetail.assigned_user_name.value|| 'No Info'}}
+                                </td>
+                            </tr>
+                            <!--DESCRIPTION-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Description</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span class="text-justify" editable-textarea="taskDetail.description.value" onbeforesave="updateTaskInline($data)">
+                                            <i ng-click="getFieldName('description')" class="fa fa-edit fa-fw right"></i>
+                                            {{taskDetail.description.value|| 'No Info'}}
+                                        </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--TIME-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="timeInfoTable = !timeInfoTable">
+                                Time
+                                <i class="fa fa-fw fa-lg right" ng-class="{ 'fa-chevron-down' : timeInfoTable === true, 'fa-chevron-right' : timeInfoTable === false}"></i>
+                        </div>
+                        <table ng-show="timeInfoTable" class="table table-bordered cstm-bg-sec">
+                            <!--START DATE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Start Date</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-bsdate="date_start_stamp" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="updateTaskDateTime($data)">
+                                            {{date_start|| 'No Info'}}
+                                            <i ng-click="getFieldName('date_start')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--START TIME-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Start Time</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-bstime="date_start_stamp" e-minute-step="1" e-show-meridian="false" onbeforesave="updateTaskDateTime($data)">
+                                            {{date_start_time|| 'No Info'}}
+                                            <i ng-click="getFieldName('date_start')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+
+                         <!--DUE DATE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Due Date</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-bsdate="date_completed_c_stamp" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="updateTaskDateTime($data)">
+                                            {{date_completed_c|| 'No Info'}}
+                                            <i ng-click="getFieldName('date_completed_c')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--DUE TIME-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Due Time</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-bstime="date_completed_c_stamp" e-minute-step="1" e-show-meridian="false" onbeforesave="updateTaskDateTime($data)">
+                                            {{date_completed_c_time|| 'No Info'}}
+                                            <i ng-click="getFieldName('date_completed_c')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <!--DETAIL-->
+            </div>
+            <!--DETAIL VIEW-->
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="left">
+            <li>
+                <a back-button class="nav-pill-1"><i class="fa fa-chevron-left fa-fw fa-lg"></i></a>
+            </li>
+        </ul>
+        <ul class="right">
+            <li>
+                <a ng-click="minimiseDetails = !minimiseDetails" data-toggle="modal" data-target="#smsModal" class="nav-pill-2">
+                    <i class="fa fa-fw fa-lg" ng-class="{'fa-compress' : minimiseDetails === false, 'fa-expand' : minimiseDetails === true}"></i>
+                </a>
+            </li>
+            <li ng-show="detailStatus">
+                <a ui-sref="home.tasks.create({type: 'edit'})" class="nav-pill-1"><i class="fa fa-pencil-square fa-fw fa-lg"></i></a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->
+</div>
+<!--CONTENT-->
+

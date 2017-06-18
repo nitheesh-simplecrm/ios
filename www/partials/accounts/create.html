@@ -1,0 +1,212 @@
+<!--ACCOUNTS-->
+<form novalidate role="form" class="form text-center" name="form">
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li data-toggle="modal" data-target="#backModal"><a class="nav-pill-1">Cancel</a></li>
+        </ul>
+        <ul class="text-center">
+            <li class="text-center">
+                <h4 class="text-center text-uppercase">
+                    <i class="fa fa-briefcase scrm_accounts_i fa-fw fa-lg"></i>
+                    {{type}}
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li ng-click="save(account)" ng-hide="form.$invalid"><a class="nav-pill-1 save" data-loading-text="Saving...">Save <i class="fa fa-save fa-fw fa-lg"></i></a></li>
+        </ul>
+
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class="text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 ng-hide="form.$invalid" class="text-info">Tap below to try saving again</h4>
+                        <a ng-hide="form.$invalid" ng-click="save(account)" class="fa fa-save fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <!--FIELDS-->
+            <div class="text-center">
+                <!--NAME-->
+                <span class="label scrm_red left" style="font-size:15px;" ng-show="form.name.$error.required">*</span>
+
+                <span class="label label-warning left" ng-show="form.name.$error.minlength">Too Short</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="name" class="cstm-bg-sec form-control input-sm" placeholder="Name" ng-model="account.name.value" ng-minlength="3" required >
+                    </div>
+                </div>
+                
+                <span class="label scrm_red left" style="font-size:15px;" ng-show="form.email1.$error.required">*</span>
+                <span class="label label-danger left" ng-show="form.email1.$dirty && form.email1.$invalid">Invalid Email</span>                
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="email" name="email1" class="cstm-bg-sec form-control input-sm" placeholder="Email" ng-model="account.email1.value" required >
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="website" class="cstm-bg-sec form-control input-sm" placeholder="Website" ng-model="account.website.value">
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-uppercase left">Phone</span>
+                <!--OFFICE PHONE-->
+                <span class="label label-warning left" ng-show="phone_office_status">Too Short</span>
+                <span class="label label-warning left" ng-show="form.phone_office.$error.maxlength">Too Long</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="tel" name="phone_office" class="cstm-bg-sec form-control input-sm" placeholder="Office" ng-maxlength="13" ng-model="account.phone_office.value"  phone="account.phone_office.value" status="phone_office_status">
+                    </div>
+                </div>
+                <!--ALTERNATE PHONE-->
+                <span class="label label-warning left" ng-show="phone_alternate_status">Too Short</span>
+                <span class="label label-warning left" ng-show="form.phone_alternate.$error.maxlength">Too Long</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="tel" name="phone_alternate" class="cstm-bg-sec form-control input-sm" placeholder="Alternate" ng-maxlength="13" ng-model="account.phone_alternate.value"  phone="account.phone_alternate.value" status="phone_alternate_status">
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Assigned To <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="account.assigned_user_id.value" ng-options="user.name_value_list.id.value as user.name_value_list.name.value for user in users" style="padding-top:0%;">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea rows="6" type="text" name="description" class="cstm-bg-sec form-control input-sm" placeholder="Description" ng-model="account.description.value" ng-minlength="3"></textarea>
+                    </div>
+                </div>
+                
+                <!--BILLING ADDRESS-->
+                <!--BILLING ADDRESS-->
+                <!--BILLING ADDRESS-->
+
+                <span class="label scrm_blue_b text-uppercase left">Billing Address</span>
+                <!--STREET-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input ng-keyup="copyFromBillingReal(account)" type="text" name="billing_street" class="cstm-bg-sec form-control input-sm" placeholder="Street" ng-model="account.billing_address_street.value">
+                    </div>
+                </div>
+                <!--CITY-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input ng-keyup="copyFromBillingReal(account)" type="text" name="billing_city" class="cstm-bg-sec form-control input-sm" placeholder="City" ng-model="account.billing_address_city.value">
+                    </div>
+                </div>
+                <!--STATE-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input ng-keyup="copyFromBillingReal(account)" type="text" name="billing_state" class="cstm-bg-sec form-control input-sm" placeholder="State" ng-model="account.billing_address_state.value">
+                    </div>
+                </div>
+
+                <!--POSTAL CODE-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input ng-keyup="copyFromBillingReal(account)" type="tel" name="billing_postalcode" class="cstm-bg-sec form-control input-sm" placeholder="Postal Code" ng-model="account.billing_address_postalcode.value">
+                    </div>
+                </div>
+
+                <!--COUNTRY-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input ng-keyup="copyFromBillingReal(account)" type="text" name="billing_country" class="cstm-bg-sec form-control input-sm" placeholder="Country" ng-model="account.billing_address_country.value">
+                    </div>
+                </div>
+            
+                <!--BILLING ADDRESS-->
+                <!--BILLING ADDRESS-->
+                <!--BILLING ADDRESS-->
+
+                <!--SHIPPING ADDRESS-->
+                <!--SHIPPING ADDRESS-->
+                <!--SHIPPING ADDRESS-->
+                <!--<h4 class="text-center">-->
+                <span class="label scrm_blue_b text-uppercase left">Shipping Address</span>
+                <span ng-click="copyFromBilling(account)" class="label right" ng-class="{'label-success': cfbStatus, 'label-default' : !cfbStatus }">Copy From Billing</span>
+                <!--</h4>-->
+                <!--STREET-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="shipping_street" class="cstm-bg-sec form-control input-sm" placeholder="Street" ng-model="account.shipping_address_street.value">
+                    </div>
+                </div>
+                <!--CITY-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="shipping_city" class="cstm-bg-sec form-control input-sm" placeholder="City" ng-model="account.shipping_address_city.value">
+                    </div>
+                </div>
+                <!--STATE-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="shipping_state" class="cstm-bg-sec form-control input-sm" placeholder="State" ng-model="account.shipping_address_state.value">
+                    </div>
+                </div>
+
+                <!--POSTAL CODE-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="tel" name="shipping_postalcode" class="cstm-bg-sec form-control input-sm" placeholder="Postal Code" ng-model="account.shipping_address_postalcode.value">
+                    </div>
+                </div>
+
+                <!--COUNTRY-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="shipping_country" class="cstm-bg-sec form-control input-sm" placeholder="Country" ng-model="account.shipping_address_country.value">
+                    </div>
+                </div>
+           
+
+<!--                <button class="btn btn-default btn-block btn-lg btn-danger" id="noLoginUser" ng-click="reset()" >Reset</button>-->
+                <button class="btn btn-default btn-lg btn-danger col-xs-5 pull-left" id="noLoginUser" data-toggle="modal" data-target="#resetModal" >Reset</button>
+
+<button ng-hide="form.$invalid" id="saveAccount" data-loading-text="Saving..." ng-click="save(account)" class="btn btn-default btn-lg btn-success col-xs-5 pull-right save">Save</button>
+
+
+
+
+
+            </div>
+            <!--FIELDS-->
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+</form>
+<!--FORM-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="text-center">
+            <li>
+                <a>
+                    <small ng-show="form.$invalid" class="text-warning col-xs-12">Some Fields Required.</small>
+                    <small ng-show="!form.$invalid" class="text-success">Everything looks okay.</small>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->
+<!--Back Modal-->
+<div ng-include="'partials/back.html'"></div>
+<!--Reset Modal-->
+<div ng-include="'partials/reset.html'"></div>

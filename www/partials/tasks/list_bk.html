@@ -1,0 +1,121 @@
+<!--TASKS-->
+<!--DRAWERS-->
+<div snap-drawers>
+    <div ng-include="'partials/left-drawer.html'"></div>
+</div>
+<!--DRAWERS-->
+<!--CONTENT-->
+<div snap-content snap-options="opts">
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li snap-toggle="left"><a class="nav-pill-1"><i class="fa fa-bars fa-lg"></i></a></li>
+        </ul>
+        <ul>
+            <li>
+                <h4 ng-show="listStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                    Tasks
+                </h4>
+                <h4 ng-show="!listStatus || networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                    <i class="fa fa-spinner fa-spin fa-fw fa-lg"></i>
+                    Loading... 
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li ui-sref="home.tasks.create({type: 'new'})"><a class="nav-pill-1"><i class="fa fa-plus fa-lg"></i></a></li>
+        </ul>
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <div ng-show="emptyList" class="well text-danger text-center"><h4>No Records Found/Assigned</h4></div>
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class=" text-center">
+                <br>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 class="text-info">Tap below to try again</h4>
+                        <a refresh class="fa fa-refresh fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <!--LIST-->
+            <div ng-show="listStatus">
+                <!--LIST COUNTS-->
+                <h4>
+                    <span ng-show="!networkOfflineStatus" class="label scrm_blue_b pull-left">
+                        Showing {{(tasks|filter:taskFilter).length}} of {{count}} tasks
+                    </span>
+                    <span ng-show="networkOfflineStatus" class="label scrm_blue_b pull-left">
+                        Offline
+                    </span>
+                </h4>
+                <h4 ng-show="!taskFilter.name_value_list.name.value">
+                    <span ng-show="!networkOfflineStatus" class="label scrm_blue_b pull-right">
+                        {{pagination.page + 1}} / {{pagination.numPages}}
+                    </span>
+                    <span ng-show="networkOfflineStatus" class="label scrm_blue_b pull-right">
+                        Offline
+                    </span>
+                </h4>
+                <!--LIST COUNTS-->
+                <br>
+                <!--LIST CONTENT-->
+                <a class="list-group-item lead scrm_grey_b"
+                   ng-repeat="task in tasks| orderBy: '-name_value_list.name.value': true | filter:taskFilter | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage"
+                   task-detail="{{task.name_value_list.id.value}}">
+                    <h5 class="list-group-item-text text-capitalize scrm_blue" >
+                        <b>{{task.name_value_list.name.value}}</b>
+                    </h5>
+                    <small class="text-capitalize">
+                        {{task.name_value_list.parent_name.value}}<span ng-show="task.name_value_list.parent_name.value">, </span>{{task.name_value_list.status.value}},
+                    </small>
+                    <small list-date-beautify="{{task.name_value_list.date_due.value}}"></small>
+                </a>
+                <!--LIST CONTENT-->
+            </div>
+            <!--LIST-->
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+</div>
+<!--CONTENT-->
+<!--FOOTER-->
+<footer class="">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="left">
+            <li ng-show="!taskFilter.name_value_list.name.value">
+                <i class="fa fa-angle-double-left fa-fw fa-2x pagination-markers" ng-click="pagination.toPageId(0)"></i>
+            </li>
+            <li ng-show="!taskFilter.name_value_list.name.value">
+                <i class="fa fa-angle-left fa-fw fa-2x pagination-markers" ng-click="pagination.prevPage()"></i>
+            </li>
+        </ul>
+        <ul ng-show="!networkOfflineStatus">
+            <input type="text" placeholder="Search Tasks" class="input-lg transparent-input" ng-model="taskFilter.name_value_list.name.value" size="15">
+        </ul>
+        <ul ng-show="networkOfflineStatus">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-search fa-fw fa-stack-1x"></i>
+                <i class="fa fa-ban fa-fw fa-stack-2x text-danger"></i>
+            </span>
+        </ul>
+        <ul class="right">
+            <li ng-show="!taskFilter.name_value_list.name.value">
+                <i class="fa fa-angle-right fa-fw fa-2x pagination-markers" ng-click="pagination.nextPage()"></i>
+            </li>
+            <li ng-show="!taskFilter.name_value_list.name.value">
+                <i class="fa fa-angle-double-right fa-fw fa-2x pagination-markers" ng-click="pagination.toPageId(pagination.numPages - 1)"></i>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->

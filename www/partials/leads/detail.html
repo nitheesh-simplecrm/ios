@@ -1,0 +1,705 @@
+<!--LEADS-->
+<!--DRAWERS-->
+<div snap-drawers snap-options="opts">
+    <div ng-include="'partials/left-drawer.html'"></div>
+    <!--RIGHT NAVIGATION-->
+    <div snap-drawer="right">
+        <nav id="header" class="main-navigation clearfix text-center">
+            <ul class='text-center'>
+                <li class="cstm-nav-no-buttons">
+                    <h4 ng-show="detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                        <i class="fa fa-bullseye scrm_leads_i fa-fw fa-lg"></i>
+                        Quick Menu
+                    </h4>
+                    <h4 ng-show="!detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                        <i class="fa fa-bullseye scrm_leads_i fa-fw fa-lg"></i>
+                        <i class="fa fa-spinner fa-spin fa-fw fa-lg"></i>
+                        Loading... 
+                    </h4>
+                </li>
+            </ul>
+        </nav>
+        <!--RIGHT NAVIGATION-->
+        <!--RIGHT WRAPPER-->
+        <div id="wrapper">
+            <!--RIGHT SCROLLER-->
+            <div id="scroller-no-gutter-top">
+                <!--RIGHT OFFLINE ALERT-->
+                <div ng-show="networkOfflineStatus" class="list-group text-center">
+                    <a class="list-group-item lead">
+                        <i class="text-warning fa fa-exclamation-circle fa-spin fa-fw fa-3x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost.</h4>
+                    </a>
+                </div>
+                <!--LIST-->
+                <!--CONVERT-->
+                <div class="row container-fluid" ng-hide="leadDetail.status.value === 'Converted'">
+                    <a class="list-group-item cstm-bg-pri lead" ui-sref="home.leads.convert">
+                        <h4>
+                            <i class="fa fa-magic text-success fa-fw fa-lg left"></i> 
+                            Convert Lead
+                            <i class="fa fa-bullseye scrm_blue fa-fw fa-lg right"></i> 
+                        </h4>
+                    </a>
+                </div>
+                <div class="list-group" ng-show="detailStatus && !networkOfflineStatus">
+                    <!--CALL-->
+                    <div class="row container-fluid">
+                        <a class="list-group-item cstm-bg-pri lead" call-create call-type='Leads' call-parentid='{{leadDetail.id.value}}' class="btn btn-info btn-lg btn-block">
+                            <h5>
+                                <i class="fa fa-plus text-danger fa-fw fa-lg left"></i> 
+                                Log Call
+                                <i class="fa fa-phone scrm_blue fa-fw fa-lg right"></i> 
+                            </h5>
+                        </a>
+                    </div>
+                    <!--MEETING-->
+                    <div class="row container-fluid">
+                        <a class="list-group-item cstm-bg-pri lead" meeting-create meeting-type='Leads' meeting-parentid='{{leadDetail.id.value}}' class="btn btn-info btn-lg btn-block">
+                            <h5>
+                                <i class="fa fa-plus text-danger fa-fw fa-lg left"></i> 
+                                Create Meeting
+                                <i class="fa fa-calendar scrm_blue fa-fw fa-lg right"></i> 
+                            </h5>
+                        </a>
+                    </div>
+                    <!--TASK-->
+                    <div class="row container-fluid">
+                        <a class="list-group-item cstm-bg-pri lead" task-create task-type='Leads' task-parentid='{{leadDetail.id.value}}' class="btn btn-info btn-lg btn-block">
+                            <h5>
+                                <i class="fa fa-plus text-danger fa-fw fa-lg left"></i> 
+                                Create Task
+                                <i class="fa fa-tasks scrm_blue fa-fw fa-lg right"></i> 
+                            </h5>
+                        </a>
+                    </div>
+                </div>
+                <!--LIST-->
+            </div>
+            <!--RIGHT SCROLLER-->
+        </div>
+        <!--RIGHT WRAPPER-->
+    </div>
+</div>
+<!--DRAWERS-->
+<!--CONTENT-->
+<div snap-content snap-options="opts">
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li snap-toggle="left"><a class="nav-pill-1"><i class="fa fa-bars fa-lg"></i></a></li>
+        </ul>
+        <ul>
+            <li>
+                <h4 ng-show="detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-bullseye scrm_leads_i scrm_leads_i fa-fw fa-lg"></i>
+                    Lead
+                </h4>
+                <h4 ng-show="!detailStatus && !networkOfflineStatus" class="text-center text-uppercase">
+                    <i class="fa fa-bullseye scrm_leads_i scrm_leads_i fa-fw fa-lg"></i>
+                    <i class="fa fa-spinner fa-spin fa-fw fa-lg"></i>
+                    Loading... 
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li snap-toggle="right"><a class="nav-pill-1"><i class="fa fa-plus fa-lg"></i></a></li>
+        </ul>
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class="text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 class="text-info">Tap below to try again</h4>
+                        <a refresh class="fa fa-refresh fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="detailStatus && !networkOfflineStatus">
+                <!--MINIMISED-->
+                <div class="list-group" ng-show="minimiseDetails">
+                    <div class="list-group-item cstm-bg-sec">
+                        <h4 class="text-capitalize">Lead Details
+                            <i ng-click="minimiseDetails = !minimiseDetails" class="fa fa-expand fa-fw fa-lg right"></i>
+                        </h4>    
+                    </div>
+                </div>
+                <!--MINIMISED-->
+                <!--DETAIL-->
+                <div id="detailView" ng-show="!minimiseDetails">
+                    <!--FIRST NAME-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec">
+                                <span editable-text="leadDetail.first_name.value" onbeforesave="updateLeadInline($data)">
+                                    {{leadDetail.first_name.value|| 'No Info'}}
+                                    <i ng-click="getFieldName('first_name')" class="fa fa-edit fa-fw right"></i>
+                                </span>    
+                        </div>
+                    </div>
+                    <!--LAST NAME-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec">
+                                <span editable-text="leadDetail.last_name.value" onbeforesave="updateLeadInline($data)">
+                                    {{leadDetail.last_name.value|| 'No Info'}}
+                                    <i ng-click="getFieldName('last_name')" class="fa fa-edit fa-fw right"></i>
+                                </span>   
+                        </div>
+                    </div>
+                    <!--TITLE-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec">
+                                <span editable-text="leadDetail.title.value" onbeforesave="updateLeadInline($data)">
+                                    {{leadDetail.title.value|| 'No Info'}}
+                                    <i ng-click="getFieldName('title')" class="fa fa-edit fa-fw right"></i>
+                                </span>    
+                        </div>
+                    </div>
+                    <!--LEAD  INFO-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="leadInfoTable = !leadInfoTable">
+                                Contact Information
+                                <i class="fa fa-fw fa-lg right" ng-class="{'fa-chevron-down' : leadInfoTable === true, 'fa-chevron-right' : leadInfoTable === false}"></i>
+                        </div>
+                        <table ng-show="leadInfoTable" class="table table-bordered cstm-bg-sec">
+                            <!--MOBILE PHONE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Mobile Phone</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a ng-show="leadDetail.phone_mobile.value !== ''" ng-click="setActiveNumber(leadDetail.phone_mobile.value)" data-toggle="modal" data-target="#actionModal">
+                                            {{leadDetail.phone_mobile.value|| 'No Info'}}
+                                        </a>
+                                        <span ng-show="leadDetail.phone_mobile.value === ''"> No info</span>
+                                        <span editable-tel="leadDetail.phone_mobile.value"  onaftersave="updateLeadInline($data)">
+                                            <i ng-click="getFieldName('phone_mobile')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--OTHER PHONE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Other Phone</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a ng-show="leadDetail.phone_other.value !== ''" ng-click="setActiveNumber(leadDetail.phone_other.value)" data-toggle="modal" data-target="#actionModal">
+                                            {{leadDetail.phone_other.value|| 'No Info'}}
+                                        </a>
+                                        <span ng-show="leadDetail.phone_other.value === ''"> No info</span>
+                                        <span editable-tel="leadDetail.phone_other.value" onaftersave="updateLeadInline($data)">
+                                            <i ng-click="getFieldName('phone_other')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--WORK PHONE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Work Phone</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a ng-show="leadDetail.phone_work.value !== ''" ng-click="setActiveNumber(leadDetail.phone_work.value)" data-toggle="modal" data-target="#actionModal">
+                                            {{leadDetail.phone_work.value|| 'No Info'}}
+                                        </a>
+                                        <span ng-show="leadDetail.phone_work.value === ''"> No info</span>
+                                        <span editable-tel="leadDetail.phone_work.value"  onaftersave="updateLeadInline($data)">
+                                            <i ng-click="getFieldName('phone_work')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Email</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <a ng-show="leadDetail.email1.value !== ''" email-compose="{{leadDetail.email1.value}}" email-to-name="{{leadDetail.name.value}}">
+                                            {{leadDetail.email1.value| strip:true:15:'...'}}
+                                        </a>
+                                        <span ng-show="leadDetail.email1.value === ''" ></span>
+                                        <span editable-email="leadDetail.email1.value" onaftersave="updateLeadInline($data)">
+                                            <i ng-click="getFieldName('email1')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--MORE INFO-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="moreInfoTable = !moreInfoTable">
+                                More Information
+                                <i class="fa fa-fw fa-lg right" ng-class="{'fa-chevron-down' : moreInfoTable === true, 'fa-chevron-right' : moreInfoTable === false}"></i>
+                        </div>
+                        <table ng-show="moreInfoTable" class="table table-bordered cstm-bg-sec">
+                            <!--STATUS-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Status</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-select="leadDetail.status.value" e-ng-options="status.value as status.name for status in statuses" onbeforesave="updateLeadInline($data)">
+                                            {{leadDetail.status.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('status')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--ACCOUNT-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Account</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        {{leadDetail.account_name.value}}
+                                </td>
+                            </tr>
+                            <!--ASSIGNED TO-->        
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Assigned To</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        {{leadDetail.assigned_user_name.value|| 'No Info'}}
+                                </td>
+                            </tr>
+                            <!--DESCRIPTION-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Description</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span class="text-justify" editable-textarea="leadDetail.description.value" onaftersave="updateLeadInline($data)">
+                                            {{leadDetail.description.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('description')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--BILLING ADDRESS-->        
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="primaryInfoTable = !primaryInfoTable">
+                                Primary Address
+                                <i class="fa fa-fw fa-lg right" ng-class="{ 'fa-chevron-right' : primaryInfoTable === false, 'fa-chevron-down' : primaryInfoTable === true}"></i>
+                        </div>
+                        <table ng-show="primaryInfoTable" class="table table-bordered cstm-bg-sec">
+                            <!--STREET-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Street</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.primary_address_street.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.primary_address_street.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('primary_address_street')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--CITY-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>City</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.primary_address_city.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.primary_address_city.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('primary_address_city')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <!--STATE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>State</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.primary_address_state.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.primary_address_state.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('primary_address_state')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                           <!--POSTAL CODE-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Postal Code</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-number="leadDetail.primary_address_postalcode.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.primary_address_postalcode.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('primary_address_postalcode')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+
+                            <!--COUNTRY-->
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Country</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.primary_address_country.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.primary_address_country.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('primary_address_country')" class="fa fa-edit fa-fw right"></i>
+                                        </span> 
+                                </td>
+                            </tr>
+                         
+                        </table>
+                    </div>
+                    <!--SHIPPING ADDRESS-->
+                    <div class="list-group">
+                        <div class="list-group-item cstm-bg-sec scrm_grey_b" ng-click="altInfoTable = !altInfoTable">
+                                Alternate Address
+                                <i class="fa fa-fw fa-lg right" ng-class="{ 'fa-chevron-right' : altInfoTable === false, 'fa-chevron-down' : altInfoTable === true}"></i>
+                        </div>
+                        <table ng-show="altInfoTable" class="table table-bordered cstm-bg-sec">
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Street</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.alt_address_street.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.alt_address_street.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('alt_address_street')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>City</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.alt_address_city.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.alt_address_city.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('alt_address_city')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>State</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.alt_address_state.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.alt_address_state.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('alt_address_state')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+
+                                  <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Postal Code</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-number="leadDetail.alt_address_postalcode.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.alt_address_postalcode.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('alt_address_postalcode')" class="fa fa-edit fa-fw right"></i>
+                                        </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-justify">
+                                    <small style="opacity: 0.5;"><b>Country</b></small>
+                                </td>
+                                <td class="text-justify">
+                                        <span editable-text="leadDetail.alt_address_country.value" onbeforesave="updateAccountInline($data)">
+                                            {{leadDetail.alt_address_country.value|| 'No Info'}}
+                                            <i ng-click="getFieldName('alt_address_country')" class="fa fa-edit fa-fw right"></i>
+                                        </span> 
+                                </td>
+                            </tr>
+                     
+                        </table>
+                    </div>
+                </div>
+                <!--DETAIL-->
+                <!--CONVERTED ACCOUNT-->
+                <div class="list-group" ng-show="leadDetail.status.value === 'Converted' && leadDetail.account_id.value !== '' && leadDetail.account_name.value !== undefined ">
+                    <div class="list-group-item cstm-bg-sec">
+<!--                        <h4>-->
+                            Converted Account : 
+<!--                            <hr class="cstm-hr">-->
+<!--                            <small>-->
+                                <a account-detail="{{leadDetail.account_id.value}}">
+                                    {{leadDetail.account_name.value}}
+                                </a>
+<!--                            </small>-->
+<!--                        </h4>    -->
+                    </div>
+                </div>
+                <!--DETAIL-->
+                <!--ACTIVITIES-->
+                <!--CALLS-->
+<!--                <span class="label scrm_blue_b text-uppercase left">Subpanel</span>-->
+                <div class="panel cstm-bg-sec  scrm_grey_b_b">
+                    
+
+                   <div class="panel-heading" ng-click="relateStatus.callsCollapsed = !relateStatus.callsCollapsed">
+                            <i ng-show="!relateStatus.calls" class="fa fa-spinner fa-spin fa-fw left"></i>
+<!--                            <i ng-show="relateStatus.calls" class="fa fa-phone scrm_calls_i fa-fw left"></i>-->
+<!--                            Calls -->
+
+<span class="label scrm_blue_b text-uppercase" style="padding-left:10px;padding-right:32px;">
+				<i ng-show="relateStatus.calls" class="fa fa-phone scrm_calls_i fa-fw"></i>
+				Calls 				
+				</span>
+
+
+                            <i class="fa fa-lg fa-fw right" ng-class="{ 'fa-chevron-down' : relateStatus.callsCollapsed === false, 'fa-chevron-right' : relateStatus.callsCollapsed === true}"></i>
+                    </div>
+
+
+                    <div ng-show="!relateStatus.callsCollapsed">
+                        <ul class="list-group cstm-no-margin-bottom">
+                            <li class="list-group-item" ng-show="leadRelate.calls.length === 0">
+                                <h6 class="text-danger">No Related Calls</h6>
+                            </li>
+                            <li class="list-group-item" ng-repeat="call in leadRelate.calls| orderBy: '-name_value_list.name.value': true "
+                                call-detail="{{call.name_value_list.id.value}}">
+                                <h6 class="list-group-item-text text-capitalize">
+                                    {{call.name_value_list.name.value}}
+                                </h6>
+                                <small class="text-capitalize">
+                                    <i ng-class="getDirectionIcon(call.name_value_list.direction.value)" class="fa fa-fw fa-lg"></i>
+                                    {{call.name_value_list.status.value}},
+                                </small>
+                                <small list-date-beautify="{{call.name_value_list.date_start.value}}"></small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--CALLS-->
+                <!--MEETINGS-->
+<!--                <span class="label scrm_blue_b text-uppercase left">Subpanel</span>-->
+                <div class="panel cstm-bg-sec  scrm_grey_b_b">
+                    <div class="panel-heading" ng-click="relateStatus.meetingsCollapsed = !relateStatus.meetingsCollapsed">
+                            <i ng-show="!relateStatus.meetings" class="fa fa-spinner fa-spin fa-fw left"></i>
+<!--                            <i ng-show="relateStatus.meetings" class="fa fa-calendar scrm_meetings_i fa-fw left"></i>-->
+<!--                            Meetings -->
+
+<span class="label scrm_blue_b text-uppercase" style="padding-left:10px;padding-right:12px;">
+				<i ng-show="relateStatus.meetings" class="fa fa-calendar scrm_meetings_i fa-fw"></i>
+				Meetings 				
+				</span>
+
+
+                            <i class="fa fa-lg fa-fw right" ng-class="{ 'fa-chevron-down' : relateStatus.meetingsCollapsed === false, 'fa-chevron-right' : relateStatus.meetingsCollapsed === true}"></i>
+                    </div>
+                    <div ng-show="!relateStatus.meetingsCollapsed">
+                        <ul class="list-group cstm-no-margin-bottom">
+                            <li class="list-group-item" ng-show="leadRelate.meetings.length === 0">
+                                <h6 class="text-danger">No Related Meetings</h6>
+                            </li>
+                            <li class="list-group-item" ng-repeat="meeting in leadRelate.meetings| orderBy: '-name_value_list.name.value': true "
+                                meeting-detail="{{meeting.name_value_list.id.value}}">
+                                <h6 class="list-group-item-text text-capitalize">
+                                    {{meeting.name_value_list.name.value}}
+                                </h6>
+                                <small class="text-capitalize">
+                                    <i ng-class="getDirectionIcon(meeting.name_value_list.direction.value)" class="fa fa-fw fa-lg"></i>
+                                    {{meeting.name_value_list.status.value}},
+                                </small>
+                                <small list-date-beautify="{{meeting.name_value_list.date_start.value}}"></small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--MEETINGS-->
+                <!--TASKS-->
+<!--                <span class="label scrm_blue_b text-uppercase left">Subpanel</span>-->
+                <div class="panel cstm-bg-sec  scrm_grey_b_b">
+                    <div class="panel-heading" ng-click="relateStatus.tasksCollapsed = !relateStatus.tasksCollapsed">
+                            <i ng-show="!relateStatus.tasks" class="fa fa-spinner fa-spin fa-fw left"></i>
+<!--                            <i ng-show="relateStatus.tasks" class="fa fa-tasks scrm_tasks_i fa-fw left"></i>-->
+<!--                            Tasks -->
+
+<span class="label scrm_blue_b text-uppercase" style="padding-left:10px;padding-right:32px;">
+				<i ng-show="relateStatus.tasks" class="fa fa-tasks scrm_tasks_i fa-fw"></i>
+				Tasks 				
+				</span>
+
+
+
+                            <i class="fa fa-lg fa-fw right" ng-class="{ 'fa-chevron-down' : relateStatus.tasksCollapsed === false, 'fa-chevron-right' : relateStatus.tasksCollapsed === true}"></i>
+                    </div>
+                    <div ng-show="!relateStatus.tasksCollapsed">
+                        <ul class="list-group cstm-no-margin-bottom">
+                            <li class="list-group-item" ng-show="leadRelate.tasks.length === 0">
+                                <h6 class="text-danger">No Related Tasks</h6>
+                            </li>
+                            <li class="list-group-item" ng-repeat="task in leadRelate.tasks| orderBy: '-name_value_list.name.value': true "
+                                task-detail="{{task.name_value_list.id.value}}">
+                                <h6 class="list-group-item-text text-capitalize">
+                                    {{task.name_value_list.name.value}}
+                                </h6>
+                                <small class="text-capitalize">
+                                    {{task.name_value_list.status.value}},
+                                </small>
+                                <small list-date-beautify="{{task.name_value_list.date_completed_c.value}}"></small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--TASKS-->
+                <!--ACTIVITIES-->
+            </div>
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="left">
+            <li>
+                <a back-button class="nav-pill-1"><i class="fa fa-chevron-left fa-fw fa-lg"></i></a>
+            </li>
+            <li>
+                <a email-compose="{{leadDetail.email1.value}}" email-to-name="{{leadDetail.name.value}}" class="nav-pill-2">
+                    <i class="fa fa-envelope fa-fw fa-lg"></i>
+                </a>
+            </li>
+            <li ng-show="detailStatus && (leadDetail.alt_address_street.value !== '' ||
+                            leadDetail.alt_address_city.value !== '' ||
+                            leadDetail.alt_address_state.value !== '' ||
+                            leadDetail.alt_address_country.value !== '' ||
+                            leadDetail.alt_address_postalcode.value !== '') ||
+                            (leadDetail.primary_address_street.value !== '' ||
+                                    leadDetail.primary_address_city.value !== '' ||
+                                    leadDetail.primary_address_state.value !== '' ||
+                                    leadDetail.primary_address_country.value !== '' ||
+                                    leadDetail.primary_address_postalcode.value !== '')">
+                <a data-toggle="modal" data-target="#addressModal" class="nav-pill-3"><i class="fa fa-map-marker fa-fw fa-lg"></i></a>
+            </li>
+        </ul>
+        <ul class="right">
+            <li ng-show="detailStatus">
+                <a data-toggle="modal" data-target="#callSmsModal" class="nav-pill-4">
+                    <i class="fa fa-globe fa-fw fa-lg"></i>
+                </a>
+            </li>
+            <li>
+                <a ng-click="minimiseDetails = !minimiseDetails" data-toggle="modal" data-target="#smsModal" class="nav-pill-2">
+                    <i class="fa fa-fw fa-lg" ng-class="{'fa-compress' : minimiseDetails === false, 'fa-expand' : minimiseDetails === true}"></i>
+                </a>
+            </li>
+            <li ng-show="detailStatus">
+                <a ui-sref="home.leads.create({type: 'edit'})" class="nav-pill-1"><i class="fa fa-pencil-square fa-fw fa-lg"></i></a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->
+</div>
+<!--CONTENT-->
+
+<!--ACTION CHOOSE MENU-->
+<div class="modal fade bs-example-modal-sm" id="actionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <br>
+            <h3 class="modal-title text-center" id="callModalLabel"><i class="fa fa-globe fa-fw fa-lg"></i> Call or SMS</h3>
+            <hr>
+
+            <div class="modal-body text-center">
+                <div class="row container-fluid">
+                    <a class="btn btn-info btn-lg btn-block left" href="tel:{{activeNumber}}">
+                        <b><i class="fa fa-phone fa-fw left"></i>{{activeNumber}}</b>
+                    </a>
+                    <a class="btn btn-success btn-lg btn-block right" sms-compose="{{activeNumber}}">
+                        <b><i class="fa fa-wechat fa-fw left"></i>{{activeNumber}}</b>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-danger pull-right"><b>Close</b></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--ACTION CHOOSE MENU-->
+<!--CALL AND SMS NUMBER CHOOSE MENU -->
+<div class="modal fade bs-example-modal-sm" id="callSmsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <br>
+            <h3 class="modal-title text-center" id="callModalLabel"><i class="fa fa-globe fa-fw fa-lg"></i> Connect</h3>
+            <hr>
+            <h4 class="modal-title text-center" id="callSmsModalLabel">
+                <i class="fa fa-phone fa-fw fa-lg"></i>
+                Choose Number to Call
+            </h4>
+            <div class="modal-body text-center">
+                <div class="row container-fluid">
+                    <a class="btn btn-primary btn-lg btn-block left" ng-show="leadDetail.phone_mobile.value !== ''" href="tel:{{leadDetail.phone_mobile.value}}">
+                        <b>{{leadDetail.phone_mobile.value|| 'No Info'}}</b>
+                    </a>
+                    <a class="btn btn-primary btn-lg btn-block left" ng-show="leadDetail.phone_other.value !== ''" href="tel:{{leadDetail.phone_other.value}}">
+                        <b>{{leadDetail.phone_other.value|| 'No Info'}}</b>
+                    </a>
+                    <h4><span class="label label-info" ng-show="leadDetail.phone_mobile.value === '' && leadDetail.phone_mobile.value === ''">No Numbers to Call</span></h4>
+                </div>
+            </div>
+            <hr>
+            <h4 class="modal-title text-center" id="callSmsModalLabel">
+                <i class="fa fa-wechat fa-fw fa-lg"></i>
+                Choose Number to SMS
+            </h4>
+            <div class="modal-body text-center">
+                <div class="row container-fluid">
+                    <a class="btn btn-success btn-lg btn-block right" ng-show="leadDetail.phone_mobile.value !== ''" sms-compose="{{leadDetail.phone_mobile.value}}">
+                        <b>{{leadDetail.phone_mobile.value|| 'No Info'}}</b>
+                    </a>
+                    <a class="btn btn-success btn-lg btn-block right" ng-show="leadDetail.phone_other.value !== ''" sms-compose="{{leadDetail.phone_other.value}}">
+                        <b>{{leadDetail.phone_other.value|| 'No Info'}}</b>
+                    </a>
+                    <h4><span class="label label-info" ng-show="leadDetail.phone_mobile.value === '' && leadDetail.phone_mobile.value === ''">No Numbers to SMS</span></h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-danger pull-right"><b>Close</b></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--CALL AND SMS NUMBER CHOOSE MENU -->
+<!--ADDRESS CHOOSE MENU-->
+<div class="modal fade bs-example-modal-sm" id="addressModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h2 class="modal-title" id="addressModalLabel">Choose Address</h2>
+            </div>
+            <div class="modal-body text-center">
+                <a class="btn btn-info btn-lg btn-block" ng-show="leadDetail.alt_address_street.value !== '' ||
+                                leadDetail.alt_address_city.value !== '' ||
+                                leadDetail.alt_address_state.value !== '' ||
+                                leadDetail.alt_address_country.value !== '' ||
+                                leadDetail.alt_address_postalcode.value !== ''"
+                   map-browse="{{leadDetail.alt_address_street.value}} {{leadDetail.alt_address_city.value}} {{leadDetail.alt_address_state.value}} {{leadDetail.alt_address_country.value}}" class="nav-pill-3">
+                    <i class="fa fa-map-marker fa-fw fa-lg"></i> Shipping Address
+                </a>
+                <br>
+                <a class="btn btn-info btn-lg btn-block" ng-show="leadDetail.primary_address_street.value !== '' ||
+                                leadDetail.primary_address_city.value !== '' ||
+                                leadDetail.primary_address_state.value !== '' ||
+                                leadDetail.primary_address_country.value !== '' ||
+                                leadDetail.primary_address_postalcode.value !== ''"
+                   map-browse="{{leadDetail.primary_address_street.value}} {{leadDetail.primary_address_city.value}} {{leadDetail.primary_address_state.value}} {{leadDetail.primary_address_country.value}}" class="nav-pill-3">
+                    <i class="fa fa-map-marker fa-fw fa-lg"></i> Billing Address
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-danger pull-right"><b>Close</b></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--ADDRESS CHOOSE MENU-->

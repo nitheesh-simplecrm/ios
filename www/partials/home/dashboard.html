@@ -1,0 +1,309 @@
+<!--HOME-->
+<!--DRAWERS-->
+<div snap-drawers>
+    <div ng-include="'partials/left-drawer.html'"></div>
+    <!--RIGHT CONTENT-->
+    <div snap-drawer="right">
+        <!--RIGHT NAVIGATION-->
+        <nav id="header" class="main-navigation clearfix text-center">
+            <ul>
+                <li class="cstm-nav-no-buttons">
+                    <h4 class="text-center text-uppercase">
+                        Menu
+                    </h4>
+                </li>
+            </ul>
+        </nav>
+        <!--RIGHT NAVIGATION-->
+        <!--RIGHT WRAPPER-->
+        <div id="wrapper" class="list-group">
+            <!--RIGHT SCROLLER-->
+            <div id="scroller-no-gutter-top">
+                <!--LEAD-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" lead-create lead-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Lead
+                            <i class="fa fa-bullseye fa-fw fa-lg right scrm_blue"></i> 
+                        </h5>
+                    </a>
+                </div>
+                <!--ACCOUNT-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" account-create account-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Account
+                            <i class="fa fa-briefcase scrm_blue fa-fw fa-lg right"></i>
+                        </h5>
+                    </a>
+                </div>
+
+                <!--OPPORTUNITY-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" opportunity-create opportunity-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Opportunities
+                            <i class="fa fa-dollar scrm_blue fa-fw fa-lg right"></i>
+
+                        </h5>
+                    </a>
+                </div>
+
+                <!--CONTACT-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" contact-create contact-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Contact
+                            <i class="fa fa-user scrm_blue fa-fw fa-lg right"></i> 
+
+                        </h5>
+                    </a>
+                </div>
+
+                <!--CALL-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" call-create call-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Log Call
+                            <i class="fa fa-phone  scrm_blue fa-fw fa-lg right"></i>
+
+                        </h5>
+                    </a>
+                </div>
+                <!--MEETING-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" meeting-create meeting-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Meeting
+                            <i class="fa fa-calendar scrm_blue fa-fw fa-lg right"></i>
+                        </h5>
+                    </a>
+                </div>
+                <!--TASK-->
+                <div class="row container-fluid">
+                    <a class="list-group-item cstm-bg-pri lead" task-create task-type='new'>
+                        <h5>
+                            <i class="fa fa-plus scrm_red fa-fw fa-lg left"></i> 
+                            Task
+                            <i class="fa fa-tasks scrm_blue fa-fw fa-lg right"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+            <!--RIGHT SCROLLER-->
+        </div>
+        <!--RIGHT WRAPPER-->
+    </div>
+    <!--RIGHT CONTENT-->
+</div>
+<!--DRAWERS-->
+<!--CONTENT-->
+<div snap-content>
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li snap-toggle="left"><a class="nav-pill-1"><i class="fa fa-bars fa-lg"></i></a></li>
+        </ul>
+        <ul>
+            <li>
+                <h4 class="text-center">
+                    SimpleCRM On Mobile
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li snap-toggle="right"><a class="nav-pill-1"><i class="fa fa-plus fa-lg"></i></a></li>
+        </ul>
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class="text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 class="scrm_blue">Tap below to try again</h4>
+                        <a refresh class="fa fa-refresh fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <!--UPCOMING ITEMS-->
+            <div class="panel cstm-bg-sec scrm_grey_b_b">
+                <div class="panel-heading" ng-click="collapsed.upcoming = !collapsed.upcoming">
+                    <h4 class="text-capitalize scrm_blue">
+                        <i ng-show="!upcomingListStatus" class="fa fa-spinner fa-fw fa-spin left"></i>
+                        To-Dos For Next 7 Days
+                        <i class="fa fa-lg fa-fw right" ng-class="{ 'fa-chevron-down' : collapsed.upcoming === false, 'fa-chevron-right' : collapsed.upcoming === true}"></i>
+                        <i ng-click="refresh('upcoming')" ng-show="upcomingListStatus"  class="fa fa-refresh fa-lg fa-fw"></i>
+                    </h4>
+                </div>
+                <div ng-show="!collapsed.upcoming">
+                    <!--RECENT CALLS-->
+                    <ul class="list-group cstm-no-margin-bottom">
+                        <li class="list-group-item" ng-show="emptyUpcomingList && !collapsed.upcoming">
+                            <h5 class="scrm_red">No Upcoming Records Found/Assigned</h5>
+                        </li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="call in upcomingCalls| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            call-detail="{{call.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-phone  scrm_calls_i fa-fw fa-lg right"></i> 
+                                {{call.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                <i ng-class="getDirectionIcon(call.name_value_list.direction.value)" class="fa fa-fw fa-lg"></i>
+                                {{call.name_value_list.status.value}}<span ng-show="call.name_value_list.date_start.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{call.name_value_list.date_start.value}}"></small>
+                        </li>
+                        <!--RECENT MEETINGS-->
+                        <li class="list-group-item scrm_grey_b" ng-repeat="meeting in upcomingMeetings| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            meeting-detail="{{meeting.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-calendar scrm_meetings_i fa-fw fa-lg right"></i> 
+                                {{meeting.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                {{meeting.name_value_list.status.value}}<span ng-show="meeting.name_value_list.date_start.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{meeting.name_value_list.date_start.value}}"></small>
+                        </li>
+                        <!--RECENT TASKS-->
+                        <li class="list-group-item scrm_grey_b" ng-repeat="task in upcomingTasks| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            task-detail="{{task.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg right"></i>
+                                {{task.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                {{task.name_value_list.status.value}}<span ng-show="task.name_value_list.date_completed_c.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{task.name_value_list.date_completed_c.value}}"></small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--UPMCOMING ITEMS-->
+            <!--RECENT ITEMS-->
+            <div class="panel cstm-bg-sec scrm_grey_b_b">
+                <div class="panel-heading" ng-click="collapsed.recent = !collapsed.recent">
+                    <h4 class="text-capitalize scrm_blue">
+                        <i ng-show="!recentListStatus" class="fa fa-spinner fa-spin fa-fw left"></i>
+                        Recent Items 
+                        <i class="fa fa-lg fa-fw right" ng-class="{ 'fa-chevron-down' : collapsed.recent === false, 'fa-chevron-right' : collapsed.recent === true}"></i>
+                        <i ng-click="refresh('recent')" ng-show="recentListStatus"  class="fa fa-refresh fa-lg fa-fw"></i>
+                    </h4>
+                </div>
+                <div ng-show="!collapsed.recent">
+                    <!--RECENT ACCOUNTS-->
+                    <ul class="list-group cstm-no-margin-bottom">
+                        <li class="list-group-item" ng-show="emptyRecentList && !collapsed.recent">
+                            <h5 class="scrm_red">No Recent Records Found/Assigned</h5>
+                        </li>
+                        <!--RECENT LEADS-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentLeads > 0"><h5><i class="fa fa-bullseye fa-fw  scrm_leads_i"></i><b>Leads</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="lead in recentLeads| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            lead-detail="{{lead.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-bullseye  scrm_leads_i fa-fw fa-lg right"></i> 
+                                {{lead.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">{{lead.name_value_list.title.value}}</small>
+                        </li>
+                        <!--RECENT ACCOUNTS-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentAccounts > 0"><h5><i class="fa fa-briefcase scrm_accounts_i fa-fw"></i><b>Accounts</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="account in recentAccounts| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            account-detail="{{account.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-briefcase scrm_accounts_i fa-fw fa-lg right"></i> 
+                                {{account.name_value_list.name.value}}
+                            </h5> 
+                            <small class="text-capitalize">{{account.name_value_list.billing_address_city.value}}<span ng-show="account.name_value_list.billing_address_country.value">, </span>{{account.name_value_list.billing_address_country.value}}</small>
+                        </li>
+                        <!--RECENT CONTACTS-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentContacts > 0"><h5><i class="fa fa-user scrm_contacts_i fa-fw"></i><b>Contacts</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="contact in recentContacts| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            contact-detail="{{contact.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-user scrm_contacts_i fa-fw fa-lg right"></i> 
+                                {{contact.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">{{contact.name_value_list.title.value}}</small>
+                        </li>
+                        <!--RECENT OPPORTUNITIES-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentOpportunities > 0"><h5><i class="fa fa-dollar scrm_opportunities_i fa-fw"></i><b>Opportunities</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="opportunity in recentOpportunities| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            opportunity-detail="{{opportunity.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-dollar scrm_opportunities_i fa-fw fa-lg right"></i> 
+                                {{opportunity.name_value_list.name.value}}
+                            </h5>
+<small class="text-capitalize"><i class="fa fa-rupee fa-fw"></i>{{opportunity.name_value_list.amount.value}}<span ng-show="opportunity.name_value_list.sales_stage.value">, </span>{{opportunity.name_value_list.sales_stage.value}}</small>
+                        </li>
+                        <!--RECENT CALLS-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentCalls > 0"><h5><i class="fa fa-phone  scrm_calls_i fa-fw"></i><b>Calls</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="call in recentCalls| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            call-detail="{{call.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-phone  scrm_calls_i fa-fw fa-lg right"></i> 
+                                {{call.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                <i ng-class="getDirectionIcon(call.name_value_list.direction.value)" class="fa fa-fw fa-lg"></i>
+                                {{call.name_value_list.status.value}}<span ng-show="call.name_value_list.date_start.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{call.name_value_list.date_start.value}}"></small>
+                        </li>
+                        <!--RECENT MEETINGS-->
+                        <li class="cstm-list-group-item-trimmed  scrm_white scrm_blue_b" ng-show="countRecentMeetings > 0"><h5><i class="fa fa-calendar scrm_meetings_i fa-fw"></i><b>Meetings</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="meeting in recentMeetings| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            meeting-detail="{{meeting.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-calendar scrm_meetings_i fa-fw fa-lg right"></i> 
+                                {{meeting.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                {{meeting.name_value_list.status.value}}<span ng-show="meeting.name_value_list.date_start.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{meeting.name_value_list.date_start.value}}"></small>
+                        </li>
+                        <!--RECENT TASKS-->
+                        <li class="cstm-list-group-item-trimmed scrm_white scrm_blue_b" ng-show="countRecentTasks > 0"><h5><i class="fa fa-tasks scrm_tasks_i fa-fw"></i><b>Tasks</b></h5></li>
+                        <li class="list-group-item scrm_grey_b" ng-repeat="task in recentTasks| orderBy: '-name_value_list.name.value': true | filter:dashboardFilter"
+                            task-detail="{{task.name_value_list.id.value}}">
+                            <h5 class="list-group-item-text scrm_blue text-capitalize">
+                                <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg right"></i>
+                                {{task.name_value_list.name.value}}
+                            </h5>
+                            <small class="text-capitalize">
+                                {{task.name_value_list.status.value}}<span ng-show="task.name_value_list.date_completed_c.value">, </span>
+                            </small>
+                            <small list-date-beautify="{{task.name_value_list.date_completed_c.value}}"></small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--RECENT ITEMS-->
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <input type="text" placeholder="Search Dashboard" class="input-lg transparent-input pull-left" ng-model="dashboardFilter.name_value_list.name.value">
+    </nav>
+</footer>
+<!--FOOTER-->
+</div>
+<!--CONTENT-->
+

@@ -1,0 +1,171 @@
+<!--TASKS-->
+<!--FORM-->
+<form novalidate role="form" class="form text-center" name="form">
+    <!--NAVIGATION-->
+    <nav id="header" class="main-navigation clearfix text-center">
+        <ul class="left">
+            <li data-toggle="modal" data-target="#backModal" ><a class="nav-pill-1">Cancel</a></li>
+        </ul>
+        <ul>
+            <li class="text-center">
+                <h4 class="text-center text-uppercase">
+                    <i class="fa fa-tasks scrm_tasks_i fa-fw fa-lg"></i>
+                    {{type}}
+                </h4>
+            </li>
+        </ul>
+        <ul class="right">
+            <li ng-click="save(task)" ng-hide="form.$invalid"><a class="nav-pill-1 save" data-loading-text="Saving...">Save <i class="fa fa-save fa-fw fa-lg"></i></a></li>
+        </ul>
+    </nav>
+    <!--NAVIGATION-->
+    <!--WRAPPER-->
+    <div id="wrapper">
+        <!--SCROLLER-->
+        <div id="scroller">
+            <!--OFFLINE ALERT-->
+            <div ng-show="networkOfflineStatus" class="text-center">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <i class="text-warning fa fa-exclamation-circle fa-fw fa-2x"></i>
+                        <h4 class="text-warning">Oops! Network Connection Lost or Something Went Wrong.</h4>
+                        <h4 ng-hide="form.$invalid" class="text-info">Tap below to try saving again</h4>
+                        <a ng-hide="form.$invalid" ng-click="save(account)" class="fa fa-save fa-fw fa-2x"></a>
+                    </div>
+                </div>
+            </div>
+            <!--FIELDS-->
+            <div class="text-center">
+                <span class="label scrm_red left"  style="font-size:15px;" ng-show="form.name.$error.required">*</span>
+
+                <span class="label label-warning left" ng-show="form.name.$error.minlength">Too Short</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="name" class="cstm-bg-sec form-control input-sm" placeholder="Subject" ng-model="task.name.value" ng-minlength="3" required >
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Contact <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="task.contact_id.value" ng-options="contact.name_value_list.id.value as contact.name_value_list.name.value for contact in contacts" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <span class="text-center" ng-show="!contactListStatus">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    Fetching Contacts
+                    <br>
+                </span>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Related Module <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select ng-change="onSelectRelatedTo(task.parent_type.value)" class="cstm-bg-sec form-control input-sm" ng-model="task.parent_type.value" ng-options="parent_type.value as parent_type.name for parent_type in parentTypes" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <span class="text-center" ng-show="!parentListStatus && relatedTo">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    Fetching {{task.parent_type.value}}
+                    <br>
+                </span>
+                
+                
+                <span ng-show="parentListStatus" class="label scrm_blue_b text-uppercase left">Select Related Module <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div ng-show="parentListStatus" class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="task.parent_id.value" ng-options="parent.name_value_list.id.value as parent.name_value_list.name.value for parent in parentList" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-capitalize left">Start Date and Time</span>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dateStart" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar fa-fw fa-lg"></i>
+                            </span>
+                            <input type="text" class="cstm-bg-sec form-control input-sm" placeholder="Start Date" ng-model="date_start">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="task.date_start.value" on-set-time="dateStartTimeSet" data-datetimepicker-config="{ dropdownSelector: '#dateStart', minuteStep: 15 }"/>
+                    </ul>
+                </div>
+
+                <span class="label scrm_blue_b text-capitalize left">Due Date and Time</span>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dateDue" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar fa-fw fa-lg"></i>
+                            </span>
+                            <input type="text" class="cstm-bg-sec form-control input-sm" placeholder="Due Date" ng-model="date_completed_c">
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="task.date_completed_c.value" on-set-time="dateDueTimeSet" data-datetimepicker-config="{ dropdownSelector: '#dateDue', minuteStep: 15 }"/>
+                    </ul>
+                </div>
+
+                <br>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Status <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="task.status.value" ng-options="status.value as status.name for status in statuses" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Priority <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="task.priority.value" ng-options="priority.value as priority.name for priority in priorities" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <span class="label scrm_blue_b text-uppercase left">Select Assigned To <i class="fa fa-chevron-down fa-fw"></i></span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <select class="cstm-bg-sec form-control input-sm" ng-model="task.assigned_user_id.value" ng-options="user.name_value_list.id.value as user.name_value_list.name.value for user in users" style="padding-top:0%;"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+<!--                        <span class="input-group-addon">Description</span>-->
+                        <textarea rows="6" type="text" name="description" class="cstm-bg-sec form-control input-sm" placeholder="Description" ng-model="task.description.value" ng-minlength="3"></textarea>
+                    </div>
+                </div>
+
+              <button class="btn btn-default btn-lg btn-danger col-xs-5 pull-left" id="noLoginUser"  data-toggle="modal" data-target="#resetModal" >Reset</button>
+<button ng-hide="form.$invalid" id="saveTask" data-loading-text="Saving..." ng-click="save(task)" class="btn btn-default btn-lg btn-success col-xs-5 pull-right save">Save</button>
+
+
+            </div>
+            <!--FIELDS-->
+        </div>
+        <!--SCROLLER-->
+    </div>
+    <!--WRAPPER-->
+</form>
+<!--FORM-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="text-center">
+            <li>
+                <a>
+                    <small ng-show="form.$invalid" class="text-warning col-xs-12">Some Fields Required.</small>
+                    <small ng-show="!form.$invalid" class="text-success">Everything looks okay.</small>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->
+<!--Back Modal-->
+<div ng-include="'partials/back.html'"></div>
+<!--Reset Modal-->
+<div ng-include="'partials/reset.html'"></div>

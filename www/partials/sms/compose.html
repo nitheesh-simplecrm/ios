@@ -1,0 +1,125 @@
+<!--SMSES-->
+<!--NAVIGATION-->
+<nav id="header" class="main-navigation clearfix text-center">
+    <ul class="left">
+        <li data-toggle="modal" data-target="#backModal" ><a class="nav-pill-1">Cancel</a></li>
+    </ul>
+    <ul>
+        <li class="text-center">
+            <h4 class="text-center text-uppercase">
+                <i class="fa fa-envelope fa-fw fa-lg"></i>
+                Compose SMS
+            </h4>
+        </li>
+    </ul>
+    <ul class="right">
+        <li ng-click="send(smsData)" ng-hide="form.$invalid"><a class="nav-pill-1 save" data-loading-text="Sending...">Send <i class="fa fa-paper-plane fa-fw fa-lg"></i></a></li>
+    </ul>
+</nav>
+<!--NAVIGATION-->
+<!--WRAPPER-->
+<div id="wrapper">
+    <!--SCROLLER-->
+    <div id="scroller">
+        <!--FORM-->
+        <form novalidate role="form" class="form text-center" name="form">
+            <div class="text-center">
+                <span class="label label-warning left">Note: Sending a message may cost you money.</span>
+
+                <span class="label label-info left" ng-show="form.toNum.$error.required">Required</span>
+                <span class="label label-danger left" ng-show="form.toNum.$dirty && form.toID.$invalid">Invalid To Recipient</span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="tel" name="toNum" class="cstm-bg-sec form-control input-lg" placeholder="To" ng-model="smsData.toNum" required >
+                    </div>
+                </div>
+                
+                <span class="label label-info left" ng-show="form.message.$error.required">Required</span>
+                <span class="label label-warning left" ng-show="form.message.$error.minlength">Too Short</span>
+                <span class="label label-danger left" ng-show="form.message.$dirty && form.message.$invalid">Invalid Message</span>                
+                <div class="form-group">
+                    <div class="input-group">
+                        <textarea rows="6" name="message" class="cstm-bg-sec form-control input-lg" placeholder="Message" ng-model="smsData.message" ng-minlength="1" required ></textarea>
+                    </div>
+                </div>
+                
+                <button class="btn btn-default btn-block btn-lg btn-danger" id="noLoginUser" ng-click="reset()" >Reset</button>
+                
+            </div>
+        </form>
+        <!--FORM-->
+    </div>
+    <!--SCROLLER-->
+</div>
+<!--WRAPPER-->
+<!--FOOTER-->
+<footer class="container-fluid">
+    <nav id="footer" class="main-navigation text-center" role="navigation">
+        <ul class="text-center">
+            <li>
+                <a>
+                    <small ng-show="form.$invalid" class="text-warning col-xs-12">Some Fields Required.</small>
+                    <small ng-show="!form.$invalid" class="text-success">Everything looks okay.</small>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</footer>
+<!--FOOTER-->
+<!--The Back Modal-->
+<div ng-include="'partials/back.html'"></div>
+
+<div class="modal fade bs-example-modal-sm" id="successModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h2 class="modal-title" id="successModalLabel">Info</h2>
+            </div>
+            <div class="modal-message text-center">
+                <h4>Your message has been sent successfully!</h4>
+                <h4>If you wish to go back, press <b class="text-info">Done</h4>
+                <h4>If you wish to send another message to {{sms.toNum}}</h4>
+                <h4> press <b class="text-success">Compose Another</h4>
+            </div>
+            <div class="modal-footer">
+                <button back-button class="btn btn-info pull-left"><i class="fa fa-angle-left fa-fw fa-lg"></i>Done</button>
+                <button refresh data-dismiss="modal" class="btn btn-success pull-right"><i class="fa fa-pencil fa-fw fa-lg"></i>Compose Another</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="failureModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h2 class="modal-title" id="failureModalLabel">Info</h2>
+            </div>
+            <div class="modal-message text-center">
+                <h4>You message could not be sent!</h4>
+                <h4>If you wish to go back, press <b class="text-info">Done</h4>
+                <h4>If you wish to try once more</h4>
+                <h4> press <b class="text-success">Compose Another</h4>
+            </div>
+            <div class="modal-footer">
+                <button back-button class="btn btn-info pull-left"><i class="fa fa-angle-left fa-fw fa-lg"></i>Done</button>
+                <button refresh data-dismiss="modal" class="btn btn-success pull-right"><i class="fa fa-pencil fa-fw fa-lg"></i>Compose Another</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="inProcessModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h2 class="modal-title" id="inProcessModalLabel">Info</h2>
+            </div>
+            <div class="modal-message text-center">
+                <i class="text-success fa fa-spinner fa-spin fa-fw fa-2x"></i>
+                <h4 class="text-success">We are sending the message for you hold on!</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
